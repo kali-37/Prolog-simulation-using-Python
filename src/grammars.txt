@@ -1,0 +1,5 @@
+like(pawan,mango,sasa,jakuter).
+like(subash,apple).
+dislike(kiran,pineapple).
+dislike(Nikesh,potato).
+liketoomuch(Sandesh,Machine).
