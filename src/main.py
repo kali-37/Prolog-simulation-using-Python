@@ -1,61 +1,59 @@
 import sys 
-
 import collections
+from typing import List
+from parser import   Parser
+
 class Predicate:
-    def __init__(self,name):
-        self.name=name 
-        self.argv=list()   
+    predicates:dict[str,"Predicate"] = {}
+    def __new__(cls,*args,)->"Predicate" :  
+        if args[0] not in Predicate.predicates :
+            Predicate.predicates[args[0]]=super().__new__(cls)
+        return Predicate.predicates[args[0]]
 
+    def __init__(self,name:str)->None:
+        self.name:str=name 
+        if not hasattr(self, 'argv') or self.argv is None:  # if the objecit has no attribute argv or argv is None
+            self.argv: list[str | int | float]| None = None
+       
+    def add_arg(self,argv:list[int|float|str])->None:
+        if self.argv is None:
+            self.argv=argv
+        else:
+            self.argv.
 
-    def add_arg(self,argv):
-        self.argv.append(argv)
-
-    def __str__(self):
-        return f"Name : {self.name},    Argument = {self.argv} "                
-
-
-def parse(x):
-    p=0
-    predicates:List[List[Predicate]] =[[] for _ in range(30)] 
-    string=""
-    assumed_name=[[] for _ in range(30)]
-    assumed_elements=[[] for _ in range(30)]
-    e,ea=(0,0)
-    while p < len(x):
-
-        if x[p]=='(':
-            assumed_name[e].append(string.replace("\n",""))
-            string=""
-            p+=1
+    @staticmethod
+    def check_argv(*args):  # here , *args is a tuple and **kwargs is a dictionary
+        for i in args:
+            ...
             
-        if  x[p]=="," or x[p]==")" :
-            assumed_elements[ea].append(string)
-            string=""
-            p+=1
+    @staticmethod
+    def Predicate_transferer():
+        return Predicate.predicates
+
+    # Query.inputs
+
+    
+
+# def main():
+#     if not sys.argv[1]=="--help" or sys.argv[1]=="-h":
+
+#         with open (sys.argv[1]) as f:
+#             if not f.readable():
+#                 raise FileNotFoundError("Couldn't read the file") 
+#             data=f.read() 
+#             parse(data)
+
         
-        if x[p]==".":
-            predicates[e].append(Predicate(assumed_name[e][0]))
-            predicates[e][0].add_arg(assumed_elements[ea])
-            string=""
-            ea+=1
-            e+=1
-
-        if len(x) ==p:
-            break
-        string+=x[p]
-        p+=1
-
-    for i in predicates:
-        for j in i:
-            print(j)
-
-
 def main():
-    with open (sys.argv[1]) as f:
-        if not f.readable():
-            raise FileNotFoundError("Couldn't read the file") 
-        data=f.read() 
-        parse(data)
+    obj=Predicate("LIKE")
+    obj.add_arg(["bobby","sanzog","mangoes"])
+    bb=Predicate("LIKE")
+    bb.add_arg(["new","ew"])
+    b=Predicate("pawan")
+    print(bb.argv)
+    requested_value=Parser().arg_checker("LIKE(mangoes).",Predicate.Predicate_transferer())
+    print(requested_value)
+
 
 
 if __name__=='__main__':
