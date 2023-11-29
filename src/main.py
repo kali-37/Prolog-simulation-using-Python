@@ -13,13 +13,13 @@ class Predicate:
     def __init__(self,name:str)->None:
         self.name:str=name 
         if not hasattr(self, 'argv') or self.argv is None:  # if the objecit has no attribute argv or argv is None
-            self.argv: list[str | int | float]| None = None
+            self.argv: list[str | int | float |list]| None = None
        
-    def add_arg(self,argv:list[int|float|str])->None:
+    def add_arg(self,argv: list[str|int|float])-> None:
         if self.argv is None:
-            self.argv=argv
+            self.argv=[argv]
         else:
-            self.argv.
+            self.argv.append(argv)
 
     @staticmethod
     def check_argv(*args):  # here , *args is a tuple and **kwargs is a dictionary
