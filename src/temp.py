@@ -1,15 +1,10 @@
-from collections.abc import Iterable
-
-class hash_list(list): 
-    def __init__(self, *args): 
-        if len(args) == 1 and isinstance(args[0], Iterable): 
-            args = args[0] 
-        super().__init__(args) 
-         
-    def __hash__(self): 
-        return hash(e for e in self)
-
-
-ser=[[1,3,4,4]]
-print(hash(hash_list(ser)))
-print(set(ser))
+# Open a file in read mode
+with open('grammars.txt', 'r') as file:
+    # Define a function to read chunks of data
+    def read_chunk():
+        return file.read(10)  # Read 10 bytes at a time
+    
+    # Use iter() with the read_chunk() function and an empty string as the sentinel value
+    for chunk in iter(file.read,""):
+        # Process each chunk (print in this example)
+        print("Chunk:", chunk)

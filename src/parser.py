@@ -2,7 +2,9 @@ import Query
 import re
 
 class Parser(Query.query):
-    def arg_checker(self,argv:str,Pred:dict):
+
+    @staticmethod
+    def arg_checker(argv:str,Pred:dict):
         b_S=argv.count('(')
         b_C=argv.count(')')
         p_dot= '.' in argv 
@@ -14,3 +16,9 @@ class Parser(Query.query):
            raise SyntaxError("SyntaxError: Unbalanced brackets detected. Ensure that the parentheses are properly matched.")
         else:
             raise SyntaxError("SyntaxError: Invalid syntax. Guess forgot '.' dot at the end of the query")
+
+class Predicate_builder:
+
+    @staticmethod
+    def build(arg): 
+        ...
