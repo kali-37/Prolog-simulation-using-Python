@@ -1,6 +1,4 @@
 import sys 
-import collections
-from typing import List
 from parser import   Parser,Predicate_builder
 
 class Predicate:
@@ -28,9 +26,6 @@ class Predicate:
 def parse_file_data(file_pointer):
     for line in file_pointer:
         Predicate_builder().build(line)
-        
-
-
 
 
 
@@ -39,11 +34,7 @@ def main(argv):
         with open(argv[1]) as f:
             if not f.readable():
                 raise FileNotFoundError("couldn't read file : Requested py main.py file_name")
-            # data=f.read()
             parse_file_data(f)
-
-
-
 
 
 

@@ -1,4 +1,3 @@
-Examples: 
 like(pawan,mango,sasa,jakuter).
 like(subash,apple).
 dislike(kiran,pineapple).
