@@ -18,7 +18,7 @@ class Parser(Query.query):
 
     @staticmethod 
     def seprator(argv:str):
-        result=list(filter(None,re.split(r'\(|\)|\.|\,',argv)))
+        result=list(filter(None,re.split(r'\(|\)|\.|\,|\n',argv)))
         key_tester=result.pop(0)
         return key_tester,result
 
@@ -30,12 +30,8 @@ class Parser(Query.query):
             key_tester,result=Parser.seprator(argv) 
             return Query.query().single_test(key_tester,result,Pred)
 
-class Predicate_builder:
 
     @staticmethod
     def build(arg): 
         if Parser.arg_calculator(arg):
-            # key_tester,result=Parser.seprator(arg)
-            # return key_tester,result 
             return Parser.seprator(arg)
-        

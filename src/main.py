@@ -1,10 +1,11 @@
-import sys 
-from parser import   Parser,Predicate_builder
+import sys ,os
+from parser import   Parser
 
 class Predicate:
-    predicates:dict[str,"Predicate"] = {}
+    predicates:dict[str|int|float,"Predicate"] = {}
     def __new__(cls,*args,)->"Predicate" :  
         if args[0] not in Predicate.predicates :
+
             Predicate.predicates[args[0]]=super().__new__(cls)
         return Predicate.predicates[args[0]]
 
@@ -18,16 +19,24 @@ class Predicate:
             self.argv=[argv]
         else:
             self.argv.append(argv)
-            
+
+    def __str__(self):
+        return f"{self.name},({self.argv})"
+
     @staticmethod
     def Predicate_transferer():
         return Predicate.predicates
 
+
 def parse_file_data(file_pointer):
     for line in file_pointer:
-        Predicate_builder().build(line)
-
-
+        tup:tuple[str,list[str]]|None=Parser().build(line)
+        if tup is not None:  
+            obj=Predicate(tup[0])
+            obj.add_arg(list(tup[1]))
+        
+    # for  obj in Predicate.predicates.values():
+        # print(obj)
 
 def main(argv):
     if not  argv[1]!="--help" or argv[1]!="-h":
@@ -36,9 +45,25 @@ def main(argv):
                 raise FileNotFoundError("couldn't read file : Requested py main.py file_name")
             parse_file_data(f)
 
+    user_input()
 
 
 
+def user_input():
+    os.system('clear')
+    while True:
+        try:
+            str_input=input("| ?- ")
+            if str_input.lower()=="exit":
+                print("Exited .. Good bye") 
+                exit()
+            else:
+                ...
+        except SyntaxError:
+                ...
+        except Exception as e:
+            print(f"ERROR: {e}")
+        
 
 
         
