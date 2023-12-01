@@ -8,3 +8,12 @@ with open('grammars.txt', 'r') as file:
     for chunk in iter(file.read,""):
         # Process each chunk (print in this example)
         print("Chunk:", chunk)
+
+
+
+
+# top 50 IT quiz of 2023 -2024
+# 1. What is the full form of HTML?
+# 2. What is the full form of CSS?
+# 3. What is the full form of JS?
+# 4. What is the full form of PHP? Full form of PHP is 

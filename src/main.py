@@ -1,6 +1,6 @@
 import sys ,os
 from parser import   Parser
-
+import logging
 class Predicate:
     predicates:dict[str|int|float,"Predicate"] = {}
     def __new__(cls,*args,)->"Predicate" :  
@@ -51,14 +51,19 @@ def main(argv):
 
 def user_input():
     os.system('clear')
+
+    # requested_value=Parser().arg_checker("like(mango).",Predicate.Predicate_transferer())
+    # print(requested_value)
     while True:
         try:
             str_input=input("| ?- ")
             if str_input.lower()=="exit":
                 print("Exited .. Good bye") 
                 exit()
-            else:
-                ...
+            elif(str_input):
+                requested_value=Parser().arg_checker(str_input,Predicate.Predicate_transferer())
+                if  type(requested_value)==bool:
+                    print(requested_value)
         except SyntaxError:
                 ...
         except Exception as e:
@@ -74,7 +79,6 @@ def user_input():
     # bb.add_arg(["new","ew"])
     # b=Predicate("pawan")
     # print(bb.argv)
-    # requested_value=Parser().arg_checker("LIKE(mangoes,bobby,new).",Predicate.Predicate_transferer())
     # print(requested_value)
 
 
