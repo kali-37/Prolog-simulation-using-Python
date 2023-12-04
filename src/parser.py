@@ -1,11 +1,9 @@
-import Query
+import Queries
 import re
 
-class Parser(Query.query):
-
-
+class Parser(Queries.Query):
     @staticmethod 
-    def arg_calculator(argv):
+    def validate_query(argv):
         b_S=argv.count('(')
         b_C=argv.count(')')
         p_dot= '.' in argv        
@@ -17,21 +15,20 @@ class Parser(Query.query):
             raise SyntaxError("SyntaxError: Invalid syntax. Guess forgot '.' dot at the end of the query")
 
     @staticmethod 
-    def seprator(argv:str):
+    def seprate_query_elems(argv:str):
         result=list(filter(None,re.split(r'\(|\)|\.|\,|\n',argv)))
         key_tester=result.pop(0)
         return key_tester,result
 
-
+  
 
     @staticmethod
-    def arg_checker(argv:str,Pred:dict):
-        if Parser.arg_calculator(argv):
-            key_tester,result=Parser.seprator(argv) 
-            return Query.query().single_test(key_tester,result,Pred)
+    def check_arguments(argv:str,Pred:dict):
+            key_tester,result=Parser.seprate_query_elems(argv) 
+            return Queries.Query().single_test(key_tester,result,Pred)
 
 
     @staticmethod
     def build(arg): 
-        if Parser.arg_calculator(arg):
-            return Parser.seprator(arg)
+        if Parser.validate_query(arg):
+            return Parser.seprate_query_elems(arg)
