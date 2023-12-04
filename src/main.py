@@ -2,15 +2,29 @@ from re import IGNORECASE
 import sys ,os
 from parser import   Parser
 
+# class key_DATA:
+
+class Stack_history:
+    
+    def __init__(self):
+        self.stack=[]  
+
+    def adder(self,value):
+        self.stack.append(value)
+
+    def display(self):
+        return self.stack
+
+
 class Keylogger:
 
     @staticmethod
     def _key():
         if  sys.platform.startswith('win'):
             import msvcrt 
-            if msvcrt.getch()== b'n':
+            if msvcrt.getch()== b'n':#  type:ignore
                 return "NEXT"
-            elif msvcrt.getch() == b'b':
+            elif msvcrt.getch() == b'b': #type:ignore
                 return "BREAK"
         else:
             import termios, tty
@@ -104,6 +118,7 @@ def user_input():
                             else:
                                 break
                         break   
+
             else:
                 raise SyntaxError("SyntaxError: Invalid syntax. Guess forgot '.' dot at the end of the query")
         except SyntaxError:

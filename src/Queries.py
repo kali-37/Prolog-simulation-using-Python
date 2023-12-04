@@ -1,4 +1,3 @@
-
 class Query:
     @staticmethod
     def single_test(tester_key:str,tester_values:list,Pred:dict)->None | bool | list |set:
@@ -13,6 +12,10 @@ class Query:
     @staticmethod 
     def calc_value_within(tester_values,values,nums) ->bool | list |None |set:
         leter=set()
+        if len(tester_values)==0:
+            for i in values.argv:
+                if len(i)+1==nums:
+                    return i
         for i in values.argv:
             if set(tester_values).issubset(set(i)):
                 leter=set(i) 
@@ -29,17 +32,13 @@ class Query:
                     returned_value=Query.calc_value_within(tester_values,values,nums)
                     if type(returned_value)==bool:
                         return True
-                    elif returned_value is not None:
+                    elif type(returned_value)==set :
                        return  Query.furtherCalc(returned_value,nums,tester_values)
+                    else:
+                        return returned_value
             return False     
 
     @staticmethod
     def furtherCalc(values,nums,tester_values)->set|None:
-        # print("VALUES< SSLY",values)
-        # if nums<len(values): 
-        #     seter=set()
-        #     for i in values :
-        #         if set(tester_values).intersection(i):
-        #             seter.update(i)
-        taka=values-set(tester_values).intersection(values)
-        return taka
+        return values-set(tester_values).intersection(values)
+        # return taka
