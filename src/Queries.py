@@ -8,24 +8,30 @@ class Query:
                     tester_values.remove(i) 
             return Query.test_calculation(tester_key,tester_values,Pred,nums)
 
-
     @staticmethod 
     def calc_value_within(tester_values,values,nums) ->bool | list |None |set:
         leter=set()
-        if len(tester_values)==0:
-            for i in values.argv:
-                if len(i)+1==nums:
-                    return i
+        # if len(tester_values)==0:
+        #     for i in values.argv:
+        #         if len(i)+1==nums:
+        #             return i
+        Found=False
         for i in values.argv:
+            print("TESTER_VALUES",tester_values, "and i",i)
             if set(tester_values).issubset(set(i)):
+                print("YEP")
+                Found=True
                 leter=set(i) 
-        if set(tester_values).issubset(leter) and not  nums:
+        if not Found:
+            print(f"TIS FALSE")
+            return False 
+        elif set(tester_values).issubset(leter) and not  nums:
             return True 
         else : 
             return leter 
 
-
     @staticmethod
+    # search tester_key(tester_values:list) in Predicate dictionary 
     def test_calculation(tester_key:str,tester_values:list,Pred:dict,nums) ->bool | list |set|None:
             for key,values in Pred.items():
                 if tester_key == key:

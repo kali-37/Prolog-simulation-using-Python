@@ -15,13 +15,11 @@ class Parser(Queries.Query):
             else:
                 raise SyntaxError("SyntaxError: Invalid syntax. Guess forgot '.' dot at the end of the query") 
         except SyntaxError as e:
-            print(e)
             return False
 
     @staticmethod 
     def seprate_query_elems(argv:str):
         result=list(filter(None,re.split(r'\(|\)|\.|\,|\n',argv)))
-        print(result)
         key_tester=result.pop(0)
         return key_tester,result
 
