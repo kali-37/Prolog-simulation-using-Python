@@ -29,7 +29,7 @@ class key_listener:
                 else: 
                     return 'b'
 class Predicate:
-    predicates:dict[str|int|float,"Predicate"] = {}
+    predicates:dict[str|float|int,"Predicate"] = {}
     def __new__(cls,*args,)->"Predicate" :  
         if args[0] not in Predicate.predicates :
 
@@ -39,7 +39,7 @@ class Predicate:
     def __init__(self,name:str)->None:
         self.name:str=name 
         if not hasattr(self, 'argv') or self.argv is None:  # if the objecit has no attribute argv or argv is None
-            self.argv: list[str | int | float |list]| None = None
+            self.argv: list[str|list]| None = None
        
     def add_arg(self,argv: list[str|int|float])-> None:
         if self.argv is None:
@@ -117,3 +117,11 @@ if __name__=='__main__':
         print("At least 2 arguent is expected ") 
 
 
+
+
+
+
+#   AND |  ,
+#   iF   |  :-
+#    OR  | ; 
+#    Not | not

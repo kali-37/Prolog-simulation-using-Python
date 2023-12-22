@@ -1,5 +1,3 @@
-like(pawan,mango,sasa,jakuter).
-like(subash,apple).
-dislike(kiran,pineapple).
-dislike(Nikesh,potato).
-liketoomuch(Sandesh,Machine).
+likes(shyam,ram,julliet).
+likes(muna,madhan).
+likes(harry,potter).
