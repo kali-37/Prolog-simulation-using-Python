@@ -1,7 +1,8 @@
 from re import IGNORECASE
 import sys ,os,readline
 from _parser import Parser
-
+import logging
+logging.basicConfig(level=logging.INFO,filename="log.log",filemode='w')
 class key_listener:
     @staticmethod
     def _read():
@@ -72,6 +73,7 @@ def detect_key(stdsrc):
             return 'b'
        
 def main(argv):
+    logging.info("LOGGED_Main")
     if not  argv[1]!="--help" or argv[1]!="-h":
         with open(argv[1]) as f:
             if not f.readable():
@@ -91,7 +93,7 @@ def user_input():
                 if  type(requested_value)==bool:
                     print(requested_value)
                 elif type(requested_value)==set:
-                    print("Press 'n' to see next result or 'b' to see previous result or 'q' to quit")  
+                    print("Press 'n' to see next result and  'b' to break|quit")  
                     for i in requested_value:
                         if key_listener._read()=='n': 
                             print(i) 

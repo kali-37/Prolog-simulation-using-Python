@@ -1,9 +1,11 @@
 import Queries
 import re
-
+import logging
+# logging.basicConfig(level=logging.INFO)
 class Parser(Queries.Query):
     @staticmethod 
     def validate_query(argv):
+        logging.info("Parser")  
         b_S=argv.count('(')
         b_C=argv.count(')')
         p_dot= '.' in argv   
@@ -14,7 +16,8 @@ class Parser(Queries.Query):
                 raise SyntaxError("SyntaxError: Unbalanced brackets detected. Ensure that the parentheses are properly matched.")
             else:
                 raise SyntaxError("SyntaxError: Invalid syntax. Guess forgot '.' dot at the end of the query") 
-        except SyntaxError as e:
+        except SyntaxError as e: 
+            print(e)
             return False
 
     @staticmethod 
