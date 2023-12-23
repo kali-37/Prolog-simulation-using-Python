@@ -27,6 +27,12 @@ class Parser(Queries.Query):
         return key_tester,result
 
     @staticmethod
+    def check_arguments(arg): 
+        if Parser.validate_query(arg):
+            return Parser.seprate_query_elems(arg)
+        return False 
+# ___________________  USER INPUT HANDLER ______________________ #
+    @staticmethod
     def build(argv:str,Pred:dict):
         if Parser.validate_query(argv):
             key_tester,result=Parser.seprate_query_elems(argv) 
@@ -34,7 +40,5 @@ class Parser(Queries.Query):
                 return key_tester,result
             return Queries.Query().single_test(key_tester,result,Pred)
 
-    @staticmethod
-    def check_arguments(arg): 
-        if Parser.validate_query(arg):
-            return Parser.seprate_query_elems(arg)
+
+# _________________ USER INPUT HANDLER :CLOSED ________________ #

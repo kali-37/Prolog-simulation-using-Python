@@ -33,7 +33,6 @@ class Predicate:
     predicates:dict[str|float|int,"Predicate"] = {}
     def __new__(cls,*args,)->"Predicate" :  
         if args[0] not in Predicate.predicates :
-
             Predicate.predicates[args[0]]=super().__new__(cls)
         return Predicate.predicates[args[0]]
 
@@ -58,10 +57,17 @@ class Predicate:
 
 def parse_file_data(file_pointer):
     for line in file_pointer:
-        tup:tuple[str,list[str]]|None=Parser().check_arguments(line)
-        if tup is not None:  
-            obj=Predicate(tup[0])
-            obj.add_arg(list(tup[1]))
+        x= Parser().check_arguments(line)
+        if  type(x)==bool:
+            print("Syntax Error Operator Expected")
+            logging.critical("GRAMMARS FILE HAVE TO BE CORRECTED") 
+            exit()
+        else:
+            logging.info("GRAMMARS Accepted ") 
+            tup:tuple[str,list[str]]|None=x 
+            if tup is not None:  
+                obj=Predicate(tup[0])
+                obj.add_arg(list(tup[1]))
         
 def detect_key(stdsrc):
     stdsrc.clear()
@@ -77,7 +83,7 @@ def main(argv):
     if not  argv[1]!="--help" or argv[1]!="-h":
         with open(argv[1]) as f:
             if not f.readable():
-                raise FileNotFoundError("couldn't read file : Requested py main.py file_name")
+                raise FileNotFoundError(f"couldn't read file : Requested grammars file {argv[1]}")
             parse_file_data(f)
     user_input()
 def user_input():

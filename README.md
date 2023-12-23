@@ -4,4 +4,11 @@
 
       Format : relation(entity1, entity2, ....k'th entity).
 
+* Things to remember before creating grammars
+      
+            If you are using a variable in a relation, then it should be in small letters.
+            Brackets , commas and full stops must be correctly used.
+            If you are using a constant in a relation, then it should be in capital letters.
+
+
 

@@ -1,5 +1,4 @@
 import logging
-from re import T
 
 if __name__=="__main__":
     from main import Predicate
@@ -39,18 +38,16 @@ class Query:
                                         except ValueError as e:
                                             print(e)
                                             return False
-                    
                             return Query.test_calculation(tester_values,i,nums,_index_nums)
-
             return False
 
     @staticmethod 
     def calc_value_within(tester_values,values,nums,_index_nums) ->bool | list |None |set:
         if set(tester_values).issubset(set(values)):
-            if len(tester_values)+nums==len(values) :
+            if not nums:
+                return True 
+            elif len(tester_values)+nums==len(values) :
                 return set(values[i] for i in _index_nums)
-            elif not nums:
-                 return True 
         else :
              return False
 
