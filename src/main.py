@@ -32,12 +32,15 @@ class key_listener:
 class Predicate:
     predicates:dict[str|float|int,"Predicate"] = {}
     def __new__(cls,*args,)->"Predicate" :  
+        print("ARGS on cls",*args)
         if args[0] not in Predicate.predicates :
             Predicate.predicates[args[0]]=super().__new__(cls)
-        return Predicate.predicates[args[0]]
+        # print(Predicate.predicates[args[0]])
+        return Predicate.predicates[args[0]] 
 
     def __init__(self,name:str)->None:
         self.name:str=name 
+
         if not hasattr(self, 'argv') or self.argv is None:  # if the objecit has no attribute argv or argv is None
             self.argv: list[str|list]| None = None
        
@@ -98,13 +101,14 @@ def user_input():
                 requested_value=Parser().build(str_input,Predicate.Predicate_transferer())
                 if  type(requested_value)==bool:
                     print(requested_value)
-                elif type(requested_value)==set:
-                    print("Press 'n' to see next result and  'b' to break|quit")  
+                elif type(requested_value)==list or type(requested_value)==set:
                     for i in requested_value:
-                        if key_listener._read()=='n': 
-                            print(i) 
-                        else: 
-                            break   
+                        print("Press 'n' to see next result and  'b' to break|quit")  
+                        for j in i:
+                            if key_listener._read()=='n': 
+                                print(j) 
+                            else: 
+                                break   
             else:
                 raise SyntaxError("SyntaxError: Invalid syntax. Guess forgot '.' dot at the end of the query")
         except SyntaxError:
