@@ -1,3 +1,4 @@
 likes(shyam,ram,julliet).
+likes(shyam,julliet,sita).
 likes(harry,potter).
 likes(muna,madhan).
