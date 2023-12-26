@@ -1,0 +1,6 @@
+.prolog
+.git
+src/__pycache__/
+src/log.log
+.vscode
+
