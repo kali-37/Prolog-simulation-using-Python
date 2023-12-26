@@ -1,7 +1,7 @@
 import Queries
 import re
 import logging
-# logging.basicConfig(level=logging.INFO)
+
 class Parser(Queries.Query):
     @staticmethod 
     def validate_query(argv):

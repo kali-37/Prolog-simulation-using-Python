@@ -1,4 +1,6 @@
 likes(shyam,ram,julliet).
-likes(shyam,julliet,sita).
-likes(harry,potter).
-likes(muna,madhan).
+likes(shyam,sita,ram).
+likes(shyam,julliet,ram,manik,pawan).
+likes(manu,pau).
+likes(tat).
+dislike(tato,matu).
