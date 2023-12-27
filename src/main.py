@@ -1,5 +1,5 @@
 from re import IGNORECASE
-import sys ,os,readline
+import sys ,os,readline,time
 from _parser import Parser
 import logging
 logging.basicConfig(level=logging.INFO,filename="log.log",filemode='w')
@@ -35,7 +35,6 @@ class Predicate:
         print("ARGS on cls",*args)
         if args[0] not in Predicate.predicates :
             Predicate.predicates[args[0]]=super().__new__(cls)
-        # print(Predicate.predicates[args[0]])
         return Predicate.predicates[args[0]] 
 
     def __init__(self,name:str)->None:
@@ -57,21 +56,42 @@ class Predicate:
     def Predicate_transferer():
         return Predicate.predicates
 
+class Relations:    
+    Query_dict:dict[str,str]={}
+    def __init__(self,relate,queries,variations):
+        self.relate=relate 
+        self.queries=queries
+        self.variations=variations
+        self.map_query_variations()
+        self.new_mapped_variations=[]
+
+    def map_query_variations(self):
+        for _x in self.queries:
+            Relations.Query_dict[_x]=""
+
+
 
 def parse_file_data(file_pointer):
     for line in file_pointer:
         x= Parser().check_arguments(line)
-        if  type(x)==bool:
+        if  not x:#i.e x false
             print("Syntax Error Operator Expected")
             logging.critical("GRAMMARS FILE HAVE TO BE CORRECTED") 
             exit()
-        else:
-            logging.info("GRAMMARS Accepted ") 
-            tup:tuple[str,list[str]]|None=x 
-            if tup is not None:  
-                obj=Predicate(tup[0])
-                obj.add_arg(list(tup[1]))
         
+        else:
+            if type(x)==tuple:
+                logging.info("GRAMMARS Accepted ") 
+                tup:tuple[str,list[str]]=x 
+                if tup is not None:  
+                    obj=Predicate(tup[0])
+                    obj.add_arg(list(tup[1]))
+            else:
+                print(x)
+               
+                
+                
+    time.sleep(9)
 def detect_key(stdsrc):
     stdsrc.clear()
     while True:
