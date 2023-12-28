@@ -1,63 +1,27 @@
-class ReadLine:
-    def __init__(self):
-        self.buffer = []
-        self.history = []  # Store command history
-        self.history_index = 0  # Index for navigating history
 
-    def add_to_buffer(self, text):
-        self.buffer.extend(text)
+testr="relation(X,Y):-  likes(Y,X,Z) not likes(X,Y,Z) ; likes(X,X) , likes(P,Q)."
 
-    def clear_buffer(self):
-        self.buffer = []
+test=testr.split(':-')
+print(test)
+text0=test[0]
+text=test[1]
+import re 
+rem=re.findall(r'([a-z][\w_]+)[\s]*\(([^)]+)\)[\s]*([a-z]+|\;|\,|\.)?[\s]*',text)
+for pred,param,op in rem:
+    print(pred,param.split(','),op)
 
-    def delete_last_character(self):
-        if self.buffer:
-            self.buffer.pop()
-
-    def get_line(self):
-        return ''.join(self.buffer)
-
-    def add_to_history(self, line):
-        self.history.append(line)
-
-    def handle_up_arrow(self):
-        if self.history:
-            if self.history_index > 0:
-                self.history_index -= 1
-            return self.history[self.history_index]
-        return ''
-
-    def handle_down_arrow(self):
-        if self.history:
-            if self.history_index < len(self.history) - 1:
-                self.history_index += 1
-            return self.history[self.history_index]
-        return ''
-
-# Example Usage:
-reader = ReadLine()
-
-while True:
-    user_input = input('Enter text: ')
-    
-    if user_input == 'exit':
-        break
-    
-    if user_input == 'clear':
-        reader.clear_buffer()
-    elif user_input == 'delete':
-        reader.delete_last_character()
-    elif user_input == 'up':
-        current_line = reader.handle_up_arrow()
-        reader.clear_buffer()
-        reader.add_to_buffer(list(current_line))
-    elif user_input == 'down':
-        current_line = reader.handle_down_arrow()
-        reader.clear_buffer()
-        reader.add_to_buffer(list(current_line))
-    else:
-        reader.add_to_buffer(list(user_input))
-        reader.add_to_history(user_input)
-    
-    current_line = reader.get_line()
-    print(f'Current line: {current_line}')
+_quer0=re.match(r'([\w_]+)\(([A-Z,]+)\)*',text0)
+_quer =re.findall(r'([\w_]+)\(([A-Z,]+)\)[\s]*(not|\,|\;)?[\s]*',text)
+if _quer0:
+    relation,relation_inst=_quer0.group(1),_quer0.group(2)
+    relation_inst=relation_inst.split(',')
+    if _quer:
+        for param, param_inst,operator in _quer:
+                param_inst=param_inst.split(',')
+                if  set(param_inst).issubset(set(relation_inst)):
+                    print(relation,relation_inst,param,param_inst,operator )
+                else:
+                    print(f"ERROR: FAILED TO Create , RELATION[insts] must be subset of Query[insts]")
+                    exit()
+            #now returning the 
+                

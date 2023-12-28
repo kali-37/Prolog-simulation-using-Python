@@ -57,24 +57,26 @@ class Predicate:
         return Predicate.predicates
 
 class Relations:    
-    Query_dict:dict[str,str]={}
-    def __init__(self,relate,queries,variations):
+    _relation_obj:list["Relations"]=[]
+    def __init__(self,relate:str,queries_map:list[str],predicate,operator:str):
         self.relate=relate 
-        self.queries=queries
-        self.variations=variations
-        self.map_query_variations()
-        self.new_mapped_variations=[]
+        self.queries_map=queries_map
+        self.predicate=predicate 
+        self.operator=operator 
+        Relations._relation_obj.append(self)
+        self.Query_dict={}
 
     def map_query_variations(self):
-        for _x in self.queries:
-            Relations.Query_dict[_x]=""
+        for _x in self.queries_map:
+            self.Query_dict[_x]=""
 
-
+    def __repr__(self):
+        return self.relate       
 
 def parse_file_data(file_pointer):
     for line in file_pointer:
         x= Parser().check_arguments(line)
-        if  not x:#i.e x false
+        if  not x :#i.e x false
             print("Syntax Error Operator Expected")
             logging.critical("GRAMMARS FILE HAVE TO BE CORRECTED") 
             exit()
@@ -86,11 +88,9 @@ def parse_file_data(file_pointer):
                 if tup is not None:  
                     obj=Predicate(tup[0])
                     obj.add_arg(list(tup[1]))
-            else:
-                print(x)
-               
-                
-                
+            elif type(x)==list:
+                   Relations(x[0],x[1],x[2][0],x[2][1])
+    logging.info("Relations objects Created Sucess")                
     time.sleep(9)
 def detect_key(stdsrc):
     stdsrc.clear()
@@ -118,18 +118,21 @@ def user_input():
                 print("Exited .. Good bye") 
                 exit()
             elif(str_input):
-                requested_value=Parser().build(str_input,Predicate.Predicate_transferer())
+                requested_value=Parser().build(str_input,Predicate.Predicate_transferer(),Relations._relation_obj)
                 if  type(requested_value)==bool:
                     print(requested_value)
-                elif type(requested_value)==list or type(requested_value)==set:
-                    for i in requested_value:
-                        print("Press 'n' to see next result and  'b' to break|quit")  
-                        for j in i:
-                            if key_listener._read()=='n': 
-                                print(j) 
-                            else: 
-                                break   
-            else:
+                    if hasattr(requested_value,"__iter()__") :
+                        for i in requested_value:
+                            if isinstance(i,list):
+                                print("Press 'n' to see next result and  'b' to break|quit")  
+                                for j in i:
+                                    if key_listener._read()=='n': 
+                                        print(j) 
+                                    else: 
+                                        break   
+                    else:
+                        print(requested_value)
+            else:   
                 raise SyntaxError("SyntaxError: Invalid syntax. Guess forgot '.' dot at the end of the query")
         except SyntaxError:
                 ...

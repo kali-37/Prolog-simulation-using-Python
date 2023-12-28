@@ -3,8 +3,10 @@ import logging
 
 if __name__=="__main__":
     from main import Predicate
-
+    from main import Relations
 class Query:
+
+
     @staticmethod
     def single_test(tester_key:str,tester_values:list,Pred:dict[str,"Predicate"])->None | bool | list |set:
             logging.info("QUERY_single_test started")
@@ -38,6 +40,7 @@ class Query:
                                 if _copy_tester[ie]!=i[ie] and ie<=len(_copy_tester)-1:
                                         _indx_err=True
                         if not _indx_err :
+                            # yield [tester_values,i,nums,_index_nums]  .This function return type will be generator and some adjustments has to be done . 
                             results.append([tester_values,i,nums,_index_nums] )
             if results:
                 return Query.test_calculation(results)
@@ -70,3 +73,13 @@ class Query:
                             return returned_value
                     return  _finally
 
+class Relation:
+    def __init__(self,key_tester:str,result:list[str],_relation_obj:list["Relations"],i:"Relations" ):
+        self.key_tester=key_tester
+        self.result=result 
+        self._relation_obj=_relation_obj
+        self.i=i 
+        self.calculate_return() 
+
+    def calculate_return(self):
+        ...

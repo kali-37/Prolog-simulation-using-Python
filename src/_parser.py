@@ -1,4 +1,5 @@
-import Queries
+import Queries,time
+
 import re
 import logging
 
@@ -32,16 +33,31 @@ class Parser(Queries.Query):
 
     @staticmethod
     def parse_if_query(arg):
-        print(arg,"arg")
-        result=re.match(r'(\w+)\((.*)\):-(.*)\.',arg) 
-        if result:
-            _quer=result.group(3)
-            _quer = [x.strip() for x in re.split(r';|not|,(?=\(*\))', _quer)] # i did long way as did below 
-            # _quer = [x.strip() for x in re.split(r';|not|,(?![^\(]*\))', _quer)]
+        parser_list=[]
+        print("RELATION",arg)
+        _spl=arg.split(':-')
+        _rel=_spl[0]
+        _relback=_spl[1]
+        _quer0=re.match(r'([\w_]+)\(([A-Z,]+)\)*',_rel)
+        _quer =re.findall(r'([\w_]+)\(([A-Z,]+)\)[\s]*(not|\,|\;)?[\s]*',_relback)
+        if _quer0:
+            relation,relation_inst=_quer0.group(1),_quer0.group(2)
+            relation_inst=relation_inst.split(',')
+            print(relation,relation_inst)
             if _quer:
-                return [result.group(1),[result.group(2)],_quer]
-        
-
+                print("quer",_quer)
+                for param, param_inst,operator in _quer: 
+                        param_inst=param_inst.split(',')
+                        if  set(param_inst).issubset(set(relation_inst)):
+                            parser_list.append([param,operator])
+                        else:
+                            print(f"ERROR: FAILED TO Create , RELATION[insts]:{relation_inst} must be subset of Query[insts]:{param_inst}")
+                            exit()
+                print([relation,relation_inst,parser_list])
+                time.sleep(32)
+                return [relation,relation_inst,parser_list]
+            return False
+        return False
     @staticmethod
     def check_arguments(arg)->tuple[str,list[str]]|list[list[str]]|None|bool: 
         _tmp=Parser.validate_query(arg)
@@ -56,12 +72,17 @@ class Parser(Queries.Query):
         return False 
 # ___________________  USER INPUT HANDLER ______________________ #
     @staticmethod
-    def build(argv:str,Pred:dict):
+    def build(argv:str,Pred:dict,_relation_obj:list["Relations"]):
         if Parser.validate_query(argv):
             key_tester,result=Parser.seprate_query_elems(argv) 
             if "ERROR" in result:
                 return key_tester,result
-            return Queries.Query().single_test(key_tester,result,Pred)
-
+            
+            for i in _relation_obj:
+                if i.relate==key_tester and len(i.queries)==len(key_tester): 
+                        _inst=Queries.Relations(key_tester,result,_relation_obj,i)
+                        yield _inst
+            else :
+                return Queries.Query().single_test(key_tester,result,Pred)
 
 # _________________ USER INPUT HANDLER :CLOSED ________________ #

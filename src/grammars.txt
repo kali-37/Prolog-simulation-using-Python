@@ -4,4 +4,4 @@ likes(shyam,julliet,ram,manik,pawan).
 likes(manu,pau).
 likes(tat).
 dislike(tato,matu).
-relation(X,Y):-likes(Y,X,z) not likes(X,Y,z);likes(X,X),likes(P,Q).
+relation(X,Y,Z):-likes(Y,X,Z) not likes(X,Y,Z);likes(X,X).
