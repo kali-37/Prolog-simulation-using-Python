@@ -1,8 +1,10 @@
 from re import IGNORECASE
+from utilities import Relations  
 import sys ,os,readline,time
+from typing import Iterable
 from _parser import Parser
 import logging
-logging.basicConfig(level=logging.INFO,filename="log.log",filemode='w')
+logging.basicConfig(level=logging.INFO,filename="log.log",filemode='w',format='%(levelname)s:%(module)s:%(funcName)s:%(lineno)d: %(message)s')
 class key_listener:
     @staticmethod
     def _read():
@@ -56,23 +58,6 @@ class Predicate:
     def Predicate_transferer():
         return Predicate.predicates
 
-class Relations:    
-    _relation_obj:list["Relations"]=[]
-    def __init__(self,relate:str,queries_map:list[str],predicate,operator:str):
-        self.relate=relate 
-        self.queries_map=queries_map
-        self.predicate=predicate 
-        self.operator=operator 
-        Relations._relation_obj.append(self)
-        self.Query_dict={}
-
-    def map_query_variations(self):
-        for _x in self.queries_map:
-            self.Query_dict[_x]=""
-
-    def __repr__(self):
-        return self.relate       
-
 def parse_file_data(file_pointer):
     for line in file_pointer:
         x= Parser().check_arguments(line)
@@ -89,9 +74,8 @@ def parse_file_data(file_pointer):
                     obj=Predicate(tup[0])
                     obj.add_arg(list(tup[1]))
             elif type(x)==list:
-                   Relations(x[0],x[1],x[2][0],x[2][1])
+                   Relations(x[0],x[1],x[2])
     logging.info("Relations objects Created Sucess")                
-    time.sleep(9)
 def detect_key(stdsrc):
     stdsrc.clear()
     while True:
@@ -121,17 +105,16 @@ def user_input():
                 requested_value=Parser().build(str_input,Predicate.Predicate_transferer(),Relations._relation_obj)
                 if  type(requested_value)==bool:
                     print(requested_value)
-                    if hasattr(requested_value,"__iter()__") :
-                        for i in requested_value:
-                            if isinstance(i,list):
-                                print("Press 'n' to see next result and  'b' to break|quit")  
-                                for j in i:
-                                    if key_listener._read()=='n': 
-                                        print(j) 
-                                    else: 
-                                        break   
-                    else:
-                        print(requested_value)
+                elif isinstance(requested_value,Iterable) :
+                    for i in requested_value:
+                            print("Press 'n' to see next result and  'b' to break|quit")  
+                            for j in i:
+                                if key_listener._read()=='n': 
+                                    print(j) 
+                                else: 
+                                    break   
+                else:
+                    print(requested_value)
             else:   
                 raise SyntaxError("SyntaxError: Invalid syntax. Guess forgot '.' dot at the end of the query")
         except SyntaxError:

@@ -1,7 +1,7 @@
 import Queries,time
-
 import re
 import logging
+from utilities import Relations
 
 class Parser(Queries.Query):
     @staticmethod 
@@ -43,18 +43,14 @@ class Parser(Queries.Query):
         if _quer0:
             relation,relation_inst=_quer0.group(1),_quer0.group(2)
             relation_inst=relation_inst.split(',')
-            print(relation,relation_inst)
             if _quer:
-                print("quer",_quer)
                 for param, param_inst,operator in _quer: 
                         param_inst=param_inst.split(',')
                         if  set(param_inst).issubset(set(relation_inst)):
-                            parser_list.append([param,operator])
+                            parser_list.append([param,param_inst,operator])
                         else:
                             print(f"ERROR: FAILED TO Create , RELATION[insts]:{relation_inst} must be subset of Query[insts]:{param_inst}")
                             exit()
-                print([relation,relation_inst,parser_list])
-                time.sleep(32)
                 return [relation,relation_inst,parser_list]
             return False
         return False
@@ -62,7 +58,6 @@ class Parser(Queries.Query):
     def check_arguments(arg)->tuple[str,list[str]]|list[list[str]]|None|bool: 
         _tmp=Parser.validate_query(arg)
         if _tmp:
-            print("TMP",_tmp)
             if _tmp=="if_query":
                 _parsed_if=Parser.parse_if_query(arg)
                 return _parsed_if
@@ -71,18 +66,59 @@ class Parser(Queries.Query):
             
         return False 
 # ___________________  USER INPUT HANDLER ______________________ #
-    @staticmethod
-    def build(argv:str,Pred:dict,_relation_obj:list["Relations"]):
-        if Parser.validate_query(argv):
-            key_tester,result=Parser.seprate_query_elems(argv) 
-            if "ERROR" in result:
-                return key_tester,result
+
+    
+    @staticmethod 
+    def build(argv: str, Pred: dict, _relation_obj: list["Relations"]):
+        logging.info("BUILD user INPUT") 
+        _tmp=Parser.validate_query(argv)
+        if _tmp:   
+            key_tester, result = Parser.seprate_query_elems(argv)
+            # if "ERROR" in result:
+                # return key_tester, result
+            if key_tester not in Pred.keys():
+                logging.info(f"IF_Query Build ,keytester:{key_tester}")
+                for i in _relation_obj:
+                    if i.relate == key_tester and len(i.queries_map)==len(result):
+                        _inst =Relation(key_tester, result, _relation_obj, i)
+                        print("MET___")
+                return False
             
-            for i in _relation_obj:
-                if i.relate==key_tester and len(i.queries)==len(key_tester): 
-                        _inst=Queries.Relations(key_tester,result,_relation_obj,i)
-                        yield _inst
-            else :
-                return Queries.Query().single_test(key_tester,result,Pred)
+            else:
+                return Queries.Query().single_test(key_tester, result, Pred)
 
 # _________________ USER INPUT HANDLER :CLOSED ________________ #
+
+
+
+
+class Relation:
+    def __init__(self,key_tester:str,result:list[str],_relation_obj:list["Relations"],i:"Relations" ):
+        logging.info(f"class: Relation invoked{key_tester,result}")
+        self.key_tester=key_tester
+        self.result=result 
+        self._relation_obj=_relation_obj
+        self.i=i
+        self.bulked=list(i.bulk_)
+        self._new_query=i.Query_dict
+        self.calculate_queries_map()
+        self.calculate_return() 
+
+    def calculate_queries_map(self):
+        for i in range(len(self.result)):
+            self._new_query[i]=self.result[i]
+        print(self._new_query.items()) 
+
+    def calculate_return(self):
+        print(self.bulked,"BULKED[]")
+        time.sleep(32)
+        new_result=[]
+        for i in range(len(self.bulked)):
+            for j in range(len(self.bulked)):
+                _new_tester=self.bulked[i][j]
+                # new_result.append(self.bulked[i][1]) 
+                
+        ... 
+
+    def calculate_quantifier(self,_given):
+        ... 

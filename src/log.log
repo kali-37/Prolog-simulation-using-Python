@@ -1,15 +1,28 @@
-INFO:root:LOGGED_Main
-INFO:root:Parser
-INFO:root:GRAMMARS Accepted 
-INFO:root:Parser
-INFO:root:GRAMMARS Accepted 
-INFO:root:Parser
-INFO:root:GRAMMARS Accepted 
-INFO:root:Parser
-INFO:root:GRAMMARS Accepted 
-INFO:root:Parser
-INFO:root:GRAMMARS Accepted 
-INFO:root:Parser
-INFO:root:GRAMMARS Accepted 
-INFO:root:Parser
-INFO:root:Relations objects Created Sucess
+INFO:main:main:89: LOGGED_Main
+INFO:_parser:validate_query:9: Parser
+INFO:main:parse_file_data:71: GRAMMARS Accepted 
+INFO:_parser:validate_query:9: Parser
+INFO:main:parse_file_data:71: GRAMMARS Accepted 
+INFO:_parser:validate_query:9: Parser
+INFO:main:parse_file_data:71: GRAMMARS Accepted 
+INFO:_parser:validate_query:9: Parser
+INFO:main:parse_file_data:71: GRAMMARS Accepted 
+INFO:_parser:validate_query:9: Parser
+INFO:main:parse_file_data:71: GRAMMARS Accepted 
+INFO:_parser:validate_query:9: Parser
+INFO:main:parse_file_data:71: GRAMMARS Accepted 
+INFO:_parser:validate_query:9: Parser
+INFO:main:parse_file_data:78: Relations objects Created Sucess
+INFO:_parser:build:73: BUILD user INPUT
+INFO:_parser:validate_query:9: Parser
+INFO:_parser:build:80: IF_Query Build ,keytester:relation
+INFO:_parser:build:73: BUILD user INPUT
+INFO:_parser:validate_query:9: Parser
+INFO:_parser:build:80: IF_Query Build ,keytester:relation
+INFO:_parser:build:73: BUILD user INPUT
+INFO:_parser:validate_query:9: Parser
+INFO:_parser:build:80: IF_Query Build ,keytester:relation
+INFO:_parser:build:73: BUILD user INPUT
+INFO:_parser:validate_query:9: Parser
+INFO:_parser:build:80: IF_Query Build ,keytester:relation
+INFO:_parser:__init__:97: class: Relation invoked('relation', ['ram', 'X', 'Y'])

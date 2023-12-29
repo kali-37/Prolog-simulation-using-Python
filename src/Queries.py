@@ -3,7 +3,7 @@ import logging
 
 if __name__=="__main__":
     from main import Predicate
-    from main import Relations
+    from utilities import Relations
 class Query:
 
 
@@ -72,14 +72,3 @@ class Query:
                         else:
                             return returned_value
                     return  _finally
-
-class Relation:
-    def __init__(self,key_tester:str,result:list[str],_relation_obj:list["Relations"],i:"Relations" ):
-        self.key_tester=key_tester
-        self.result=result 
-        self._relation_obj=_relation_obj
-        self.i=i 
-        self.calculate_return() 
-
-    def calculate_return(self):
-        ...
