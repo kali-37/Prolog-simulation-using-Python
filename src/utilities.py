@@ -6,8 +6,6 @@ class Relations:
         self.relate=relate 
         self.bulk_=bulk_ # For : Predicate, Predicate_instance and operator :
         self.queries_map=queries_map
-        # self.predicate=predicate 
-        # self.operator=operator 
         Relations._relation_obj.append(self)
         self.Query_dict={}
         self.map_query_variations()

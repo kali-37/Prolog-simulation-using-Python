@@ -45,7 +45,6 @@ class Query:
             if results:
                 return Query.test_calculation(results)
             if _indx_err:
-                print("ERROR : Indexing must be strict , Irregular Flow detected")
                 return False
             return False
     @staticmethod 

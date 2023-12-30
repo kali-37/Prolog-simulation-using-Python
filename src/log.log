@@ -1,3 +1,127 @@
-INFO:main:main:87: LOGGED_Main
-INFO:_parser:validate_query:9: Parser
-CRITICAL:main:parse_file_data:65: GRAMMARS FILE HAVE TO BE CORRECTED
+INFO:main:main:91: LOGGED_Main
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:73: GRAMMARS Accepted 
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:79: Relations objects Created Sucess: friend ['X', 'Y'] [['likes', ['X', 'Y'], '; not'], ['dislikes', ['X', 'Y'], '']]
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:79: Relations objects Created Sucess: enemy ['X', 'Y'] [['dislikes', ['X', 'Y'], ','], ['love', ['Y', 'X'], '; not'], ['dislike', ['X', 'X'], ','], ['likes', ['Y', 'Y'], '']]
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:main:parse_file_data:79: Relations objects Created Sucess: jealous ['X', 'Y'] [['love', ['X', 'Y'], ','], ['love', ['Y', 'Y'], ', not'], ['love', ['X', 'Y'], '']]
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:Queries:single_test:12: QUERY_single_test started
+INFO:Queries:single_test:25: QUERY_single_test('likes', ['shyam', 'ram']) 
+INFO:Queries:test_calculation:65: TESTCALCX
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:Queries:single_test:12: QUERY_single_test started
+INFO:Queries:single_test:25: QUERY_single_test('likes', ['shyam', 'X']) 
+INFO:Queries:test_calculation:65: TESTCALCX
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:Queries:single_test:12: QUERY_single_test started
+INFO:Queries:single_test:25: QUERY_single_test('likes', ['shyam', 'X', 'Y', 'Z']) 
+INFO:Queries:test_calculation:65: TESTCALCX
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:Queries:single_test:12: QUERY_single_test started
+INFO:Queries:single_test:25: QUERY_single_test('likes', ['shyam', 'jpt']) 
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:build:101: IF_Query Build ,keytester:friend
+INFO:_parser:__init__:119: class: Relation invoked('friend', ['ram', 'hari'])
+INFO:_parser:calculate_return:149: RETURN _CALCULATION Initallized
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:Queries:single_test:12: QUERY_single_test started
+INFO:Queries:single_test:25: QUERY_single_test('likes', ['ram', 'hari']) 
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:Queries:single_test:12: QUERY_single_test started
+INFO:Queries:single_test:25: QUERY_single_test('dislikes', ['ram', 'hari']) 
+INFO:_parser:__init__:129: Relation method Called
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:build:101: IF_Query Build ,keytester:friend
+INFO:_parser:__init__:119: class: Relation invoked('friend', ['shya', 'ram'])
+INFO:_parser:calculate_return:149: RETURN _CALCULATION Initallized
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:Queries:single_test:12: QUERY_single_test started
+INFO:Queries:single_test:25: QUERY_single_test('likes', ['shya', 'ram']) 
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:Queries:single_test:12: QUERY_single_test started
+INFO:Queries:single_test:25: QUERY_single_test('dislikes', ['shya', 'ram']) 
+INFO:_parser:__init__:129: Relation method Called
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:_parser:build:101: IF_Query Build ,keytester:friend
+INFO:_parser:__init__:119: class: Relation invoked('friend', ['ram', 'shyam'])
+INFO:_parser:calculate_return:149: RETURN _CALCULATION Initallized
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:Queries:single_test:12: QUERY_single_test started
+INFO:Queries:single_test:25: QUERY_single_test('likes', ['ram', 'shyam']) 
+INFO:_parser:build:94: BUILD user INPUT
+INFO:_parser:validate_query:10: Parser
+INFO:Queries:single_test:12: QUERY_single_test started
+INFO:Queries:single_test:25: QUERY_single_test('dislikes', ['ram', 'shyam']) 
+INFO:Queries:test_calculation:65: TESTCALCX
+INFO:_parser:__init__:129: Relation method Called

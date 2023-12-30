@@ -1,4 +1,5 @@
 import Queries
+import time
 import re
 import logging
 from utilities import Relations
@@ -11,8 +12,14 @@ class Parser(Queries.Query):
         b_C=argv.count(')')
         p_dot= '.' in argv   
         if_query=':-' in argv 
-        try:  
-            if if_query:
+        _comment="%"   in argv
+        _backline=False
+        if argv=="\n":
+            _backline=True
+        try: 
+            if _comment or _backline:
+                return None 
+            elif if_query and p_dot:
                 return "if_query"
             elif b_S==b_C and p_dot:
                 return True
@@ -21,14 +28,30 @@ class Parser(Queries.Query):
             elif not p_dot:
                 raise SyntaxError("SyntaxError: Invalid syntax. Guess forgot '.' dot at the end of the query") 
         except SyntaxError as e: 
-            print(e)
+            print(f"\033[31m {e} \033[0m")
+            time.sleep(0.1)
+            print("\033[33m Note: ERROR Ignored \033[0m")
+            time.sleep(0.1)
             return False
 
     @staticmethod 
     def seprate_query_elems(argv:str):
         result=list(filter(None,re.split(r'\(|\)|\.|\,|\n',argv)))
-        key_tester=result.pop(0)
-        return key_tester,result
+        result=re.match(r'([\w_]+)([\s]*)\([\s]*([\w+,\s]+)\)',argv)
+        if result:
+            if result.group(2) is None:
+                print("ERROR Predicate( query_1, query_2 ) required cant do 'Predicate[space]('")
+                exit()
+            key_tester=result.group(1)
+            result=[l.strip() for l in result.group(3).split(',')]
+            return key_tester,result
+        else:
+            e="ERROR occured COULDN'T match predicate( [queryies...])"
+            print(f"\033[31m {e} \033[0m")
+            time.sleep(0.1)
+            print("\033[33m Note: ERROR Ignored \033[0m")
+            time.sleep(0.2)
+            return False
 
     @staticmethod
     def parse_if_query(arg):
@@ -36,14 +59,14 @@ class Parser(Queries.Query):
         _spl=arg.split(':-')
         _rel=_spl[0]
         _relback=_spl[1]
-        _quer0=re.match(r'([\w_]+)\(([A-Z,]+)\)*',_rel)
-        _quer =re.findall(r'([\w_]+)\(([A-Z,]+)\)[\s]*([,;][\s]*not|\,|\;)?[\s]*',_relback)
+        _quer0=re.match(r'([\w_]+)[\s]*\(([A-Z,\s]+)\)*',_rel)
+        _quer =re.findall(r'[\s]*([\w_]+)\(([A-Z,\s]+)+[\s]*\)[\s]*([,;][\s]*not|\,|\;)?[\s]*',_relback)
         if _quer0:
             relation,relation_inst=_quer0.group(1),_quer0.group(2)
-            relation_inst=relation_inst.split(',')
+            relation_inst=[l.strip() for l in relation_inst.split(',')]
             if _quer:
                 for param, param_inst,operator in _quer: 
-                        param_inst=param_inst.split(',')
+                        param_inst=[l.strip() for l in param_inst.split(',')]
                         if  set(param_inst).issubset(set(relation_inst)):
                             parser_list.append([param,param_inst,operator])
                         else:
@@ -71,19 +94,20 @@ class Parser(Queries.Query):
         logging.info("BUILD user INPUT") 
         _tmp=Parser.validate_query(argv)
         if _tmp:   
-            key_tester, result = Parser.seprate_query_elems(argv)
-            # if "ERROR" in result:
-                # return key_tester, result
-            if key_tester not in Pred.keys():
-                logging.info(f"IF_Query Build ,keytester:{key_tester}")
-                for i in _relation_obj:
-                    if i.relate == key_tester and len(i.queries_map)==len(result):
-                        _rel=Relation(key_tester, result, i,Pred)
-                        return _rel
-                return False
-            
+            seprate_result = Parser.seprate_query_elems(argv)
+            if seprate_result:
+                key_tester, result = seprate_result
+                if key_tester not in Pred.keys():
+                    logging.info(f"IF_Query Build ,keytester:{key_tester}")
+                    for i in _relation_obj:
+                        if i.relate == key_tester and len(i.queries_map)==len(result):
+                            _rel=Relation(key_tester, result, i,Pred)
+                            return _rel
+                    return False
+                else:
+                    return Queries.Query().single_test(key_tester, result, Pred)
             else:
-                return Queries.Query().single_test(key_tester, result, Pred)
+                return False
 
 # _________________ USER INPUT HANDLER :CLOSED ________________ #
 

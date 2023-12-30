@@ -1,6 +1,6 @@
 from re import IGNORECASE
 from utilities import Relations  
-import sys ,os,readline
+import sys ,os,readline,time
 from typing import Iterable
 from _parser import Parser
 import logging
@@ -60,11 +60,15 @@ class Predicate:
 def parse_file_data(file_pointer):
     for line in file_pointer:
         x = Parser().check_arguments(line)
-        if not x:  # i.e x false
+        if not x:
+            continue
+        elif  x==False:  # i.e x false
             print("Syntax Error Operator Expected")
             logging.critical("GRAMMARS FILE HAVE TO BE CORRECTED")
             exit()
         else:
+            print("\033[32m Parsing \033[35m",x,"\033[0m")
+            time.sleep(0.1)
             if type(x) == tuple:
                 logging.info("GRAMMARS Accepted ")
                 tup: tuple[str, list[str]] = x
@@ -72,8 +76,8 @@ def parse_file_data(file_pointer):
                     obj = Predicate(tup[0])
                     obj.add_arg(list(tup[1]))
             elif type(x) == list:
+                logging.info("Relations objects Created Sucess: %s %s %s", x[0], x[1], x[2])
                 Relations(x[0], x[1], x[2])
-    logging.info("Relations objects Created Sucess")                
 def detect_key(stdsrc):
     stdsrc.clear()
     while True:
@@ -82,7 +86,7 @@ def detect_key(stdsrc):
             return 'n' 
         elif c==ord('b'):
             return 'b'
-       
+    
 def main(argv):
     logging.info("LOGGED_Main")
     if not  argv[1]!="--help" or argv[1]!="-h":
@@ -90,7 +94,11 @@ def main(argv):
             if not f.readable():
                 raise FileNotFoundError(f"couldn't read file : Requested grammars file {argv[1]}")
             parse_file_data(f)
-    user_input()
+        user_input()
+    elif argv[1]=="--help" or argv[1]=="-h":
+        print("SEE Readme.md for documentation")
+        exit()
+    
 def user_input():
     os.system('clear')
     while True:
@@ -126,7 +134,7 @@ def user_input():
         
 
 if __name__=='__main__':
-    if len(sys.argv) ==2:
+    if len(sys.argv) >=2:
 
         main(sys.argv)
     else: 
