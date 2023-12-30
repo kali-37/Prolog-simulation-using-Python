@@ -1,6 +1,6 @@
 from re import IGNORECASE
 from utilities import Relations  
-import sys ,os,readline,time
+import sys ,os,readline
 from typing import Iterable
 from _parser import Parser
 import logging
@@ -34,7 +34,6 @@ class key_listener:
 class Predicate:
     predicates:dict[str|float|int,"Predicate"] = {}
     def __new__(cls,*args,)->"Predicate" :  
-        print("ARGS on cls",*args)
         if args[0] not in Predicate.predicates :
             Predicate.predicates[args[0]]=super().__new__(cls)
         return Predicate.predicates[args[0]] 
@@ -60,21 +59,20 @@ class Predicate:
 
 def parse_file_data(file_pointer):
     for line in file_pointer:
-        x= Parser().check_arguments(line)
-        if  not x :#i.e x false
+        x = Parser().check_arguments(line)
+        if not x:  # i.e x false
             print("Syntax Error Operator Expected")
-            logging.critical("GRAMMARS FILE HAVE TO BE CORRECTED") 
+            logging.critical("GRAMMARS FILE HAVE TO BE CORRECTED")
             exit()
-        
         else:
-            if type(x)==tuple:
-                logging.info("GRAMMARS Accepted ") 
-                tup:tuple[str,list[str]]=x 
-                if tup is not None:  
-                    obj=Predicate(tup[0])
+            if type(x) == tuple:
+                logging.info("GRAMMARS Accepted ")
+                tup: tuple[str, list[str]] = x
+                if tup is not None:
+                    obj = Predicate(tup[0])
                     obj.add_arg(list(tup[1]))
-            elif type(x)==list:
-                   Relations(x[0],x[1],x[2])
+            elif type(x) == list:
+                Relations(x[0], x[1], x[2])
     logging.info("Relations objects Created Sucess")                
 def detect_key(stdsrc):
     stdsrc.clear()

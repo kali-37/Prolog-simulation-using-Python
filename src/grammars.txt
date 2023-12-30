@@ -1,7 +1,12 @@
-likes(shyam,ram,julliet).
-likes(shyam,sita,ram).
-likes(shyam,julliet,ram,manik,pawan).
-likes(manu,pau).
-likes(tat).
-dislike(tato,matu).
-relation(X,Y,Z):-likes(Y,X,Z) not likes(X,Y,Z);likes(X,X).
+% Define likes and dislikes
+likes(shyam, ram, julliet).
+likes(dhanbrd, pau).
+likes(man, suarha).
+
+dislikes(tato, [matu]).
+dislikes(shyam, [manik, pawan]).
+
+% Define relations
+friend(X, Y) :- likes(X, Ys), member(Y, Ys), \+ dislikes(X, Y).
+enemy(X, Y) :- dislikes(X, Ys), member(Y, Ys).
+

@@ -1,4 +1,4 @@
-import Queries,time
+import Queries
 import re
 import logging
 from utilities import Relations
@@ -13,7 +13,6 @@ class Parser(Queries.Query):
         if_query=':-' in argv 
         try:  
             if if_query:
-                print("IF_QU")
                 return "if_query"
             elif b_S==b_C and p_dot:
                 return True
@@ -33,13 +32,12 @@ class Parser(Queries.Query):
 
     @staticmethod
     def parse_if_query(arg):
-        parser_list=[]
-        print("RELATION",arg)
+        parser_list:list[list[str|list]]=[]
         _spl=arg.split(':-')
         _rel=_spl[0]
         _relback=_spl[1]
         _quer0=re.match(r'([\w_]+)\(([A-Z,]+)\)*',_rel)
-        _quer =re.findall(r'([\w_]+)\(([A-Z,]+)\)[\s]*(not|\,|\;)?[\s]*',_relback)
+        _quer =re.findall(r'([\w_]+)\(([A-Z,]+)\)[\s]*([,;][\s]*not|\,|\;)?[\s]*',_relback)
         if _quer0:
             relation,relation_inst=_quer0.group(1),_quer0.group(2)
             relation_inst=relation_inst.split(',')
@@ -80,8 +78,8 @@ class Parser(Queries.Query):
                 logging.info(f"IF_Query Build ,keytester:{key_tester}")
                 for i in _relation_obj:
                     if i.relate == key_tester and len(i.queries_map)==len(result):
-                        _inst =Relation(key_tester, result, _relation_obj, i)
-                        print("MET___")
+                        _rel=Relation(key_tester, result, i,Pred)
+                        return _rel
                 return False
             
             else:
@@ -93,32 +91,57 @@ class Parser(Queries.Query):
 
 
 class Relation:
-    def __init__(self,key_tester:str,result:list[str],_relation_obj:list["Relations"],i:"Relations" ):
+    def __init__(self,key_tester:str,result:list[str],i:"Relations",Pred ):
         logging.info(f"class: Relation invoked{key_tester,result}")
         self.key_tester=key_tester
         self.result=result 
-        self._relation_obj=_relation_obj
-        self.i=i
-        self.bulked=list(i.bulk_)
+        self.pred=Pred
+        self.prev_keys=i.Query_dict.keys()
+        self.bulked = list(i.bulk_)
         self._new_query=i.Query_dict
+        self.bool=None
         self.calculate_queries_map()
         self.calculate_return() 
+        logging.info("Relation method Called")
 
     def calculate_queries_map(self):
-        for i in range(len(self.result)):
-            self._new_query[i]=self.result[i]
-        print(self._new_query.items()) 
-
+        _counter=0
+        for dic in self.prev_keys:
+            self._new_query[dic]=self.result[_counter]
+            _counter+=1
+    @staticmethod
+    def operator_to_bool(_provided):
+        if _provided.strip()==",":
+            return "and" 
+        elif _provided.strip()==";":
+            return "or" 
+        elif _provided.split()==[';','not'] :
+            return "and not"
+        elif _provided.split()==[',','not'] :
+            return "or not"
+        else:
+            print("ERROR: use [ , ; not :-]combination only")
     def calculate_return(self):
-        print(self.bulked,"BULKED[]")
-        time.sleep(32)
-        new_result=[]
+        logging.info("RETURN _CALCULATION Initallized")
+        _operators=[]
+        requested_value=[]
         for i in range(len(self.bulked)):
-            for j in range(len(self.bulked)):
-                _new_tester=self.bulked[i][j]
-                # new_result.append(self.bulked[i][1]) 
-                
-        ... 
+            _eval=""
+            _eval += f"{self.bulked[i][0]}("
+            for j in self.bulked[i][1]:
+                _eval += f"{self.calculate_quantifier(j)},"
+            _eval=_eval[:-1]
+            _eval+=")."
+            requested_value.append(Parser.build(_eval,self.pred,Relations._relation_obj))
+            _operators.append(self.bulked[i][2])
+        _bool=requested_value[0]
+        for i in range(1,len(requested_value)):
+            _bool=eval(f"{_bool} {Relation.operator_to_bool(_operators[i-1])} {requested_value[i]}")
+        self.bool=_bool
+        self.__repr__()
 
     def calculate_quantifier(self,_given):
-        ... 
+        return self._new_query[_given]
+    
+    def __repr__(self):
+        return str(self.bool )

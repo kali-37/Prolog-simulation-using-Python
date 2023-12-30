@@ -1,9 +1,10 @@
+from typing import Sequence, Union
 class Relations:    
     _relation_obj:list["Relations"]=[]
-# predicate,predicate_instances , operator:str    -> bulk_
-    def __init__(self,relate,queries_map:list[str],bulk_):
+    # predicate,predicate_instances , operator:str    -> bulk_
+    def __init__(self,relate,queries_map:list[str],bulk_: Sequence[Union[str,list[str]]]):
         self.relate=relate 
-        self.bulk_=zip(bulk_) # For : Predicate, Predicate_instance and operator :
+        self.bulk_=bulk_ # For : Predicate, Predicate_instance and operator :
         self.queries_map=queries_map
         # self.predicate=predicate 
         # self.operator=operator 

@@ -22,7 +22,7 @@ class Query:
                         _values=values.argv
                         break
             _master_tester=tester_values
-            logging.info("QUERY_single_test ")
+            logging.info(f"QUERY_single_test{tester_key,tester_values} ")
             if  _values:
                 for i in _values:
                         tester_values=_master_tester[:]
@@ -63,6 +63,7 @@ class Query:
 
     def test_calculation(returned_values):
                     _finally=[]
+                    logging.info("TESTCALCX")
                     for returned_value in returned_values:
                         returned_value=Query.calc_value_within(returned_value[0],returned_value[1],returned_value[2],returned_value[3])
                         if type(returned_value)==bool:
