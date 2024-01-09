@@ -10,5 +10,5 @@
             Brackets , commas and full stops must be correctly used.
             If you are using a constant in a relation, then it should be in capital letters.
 
-
-
+For more:                         
+  https://www.linkedin.com/feed/update/urn:li:activity:7148684638696255488/
